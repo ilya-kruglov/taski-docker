@@ -34,6 +34,9 @@ services:
   frontend:
     env_file: .env
     build: ./frontend/
+    command: cp -r /app/build/. /frontend_static/
+    volumes:
+      - static:/frontend_static
 # Добавляем новый контейнер: gateway.
   gateway:
     # Сбилдить и запустить образ, 
@@ -41,7 +44,7 @@ services:
     build: ./gateway/
     # А тут подключаем volume со статикой к gateway
     volumes:
-      - static:/staticfiles/
+      - static:/staticfiles
     # Ключ ports устанавливает
     # перенаправление всех запросов с порта 8000 хоста
     # на порт 80 контейнера.
